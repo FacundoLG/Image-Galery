@@ -2,25 +2,9 @@ import React, { useState } from "react";
 import styled from "styled-components";
 const SingUpBackGround = styled.div`
   display: flex;
-  background: #000;
-  background-color: #03083e;
   opacity: 1;
-  background-image: radial-gradient(#00ffd4 2px, transparent 2px),
-    radial-gradient(#00ffd4 2px, #03083e 2px);
-  background-size: 80px 80px;
-  background-position: 0 0, 40px 40px;
   height: 100vh;
   justify-content: space-between;
-  animation: animatedBackground 400s linear infinite;
-  @keyframes animatedBackground {
-    from {
-      background-position: 40px 40px;
-    }
-    /*use negative width if you want it to flow right to left else and positive for left to right*/
-    to {
-      background-position: -10000px -10000px;
-    }
-  }
 `;
 const SingUpDiv = styled.div`
   display: flex;

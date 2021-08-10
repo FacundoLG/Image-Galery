@@ -1,27 +1,13 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
+import { setUser } from "../redux/actions/index";
 import styled from "styled-components";
 
 const LoginBackGround = styled.div`
   display: flex;
-  background: #000;
-  background-color: #03083e;
   opacity: 1;
-  background-image: radial-gradient(#00ffd4 2px, transparent 2px),
-    radial-gradient(#00ffd4 2px, #03083e 2px);
-  background-size: 80px 80px;
-  background-position: 0 0, 40px 40px;
-  height: 100vh;
   justify-content: space-between;
-  animation: animatedBackground 400s linear infinite;
-  @keyframes animatedBackground {
-    from {
-      background-position: 40px 40px;
-    }
-    /*use negative width if you want it to flow right to left else and positive for left to right*/
-    to {
-      background-position: -10000px -10000px;
-    }
-  }
+  height: 100vh;
 `;
 const LoginDiv = styled.div`
   display: flex;
@@ -42,6 +28,12 @@ const InputContainer = styled.div`
   flex-direction: column;
   width: 90%;
   margin: 0 0 50px 0;
+  > .error {
+    color: red;
+    text-align: center;
+    margin: 2px;
+    font-size: 14px;
+  }
 `;
 const LoginInput = styled.input`
   height: 30px;
@@ -66,9 +58,28 @@ const InputButton = styled.button`
     cursor: pointer;
   }
 `;
-const Login = () => {
+
+const Login = (props) => {
+  const { errorMessage } = props;
   const [userName, setUserName] = useState("");
   const [userPassword, setuserPassword] = useState("");
+  const Login = () => {
+    const loginBody = {
+      username: userName,
+      password: userPassword,
+    };
+    fetch("http://localhost:3001/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(loginBody),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        props.setUser(data);
+      });
+  };
 
   return (
     <LoginBackGround>
@@ -93,7 +104,8 @@ const Login = () => {
               setuserPassword(e.target.value);
             }}
           />
-          <InputButton>Sing Up</InputButton>
+          <InputButton onClick={Login}>Sing Up</InputButton>
+          <p className="error">{errorMessage}</p>
         </InputContainer>
         <p>
           By{" "}
@@ -109,5 +121,12 @@ const Login = () => {
     </LoginBackGround>
   );
 };
-
-export default Login;
+const MapStateToProps = (state) => {
+  return {
+    errorMessage: state.errorMessage,
+  };
+};
+const MapDispathcToProps = {
+  setUser,
+};
+export default connect(MapStateToProps, MapDispathcToProps)(Login);
