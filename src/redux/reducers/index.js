@@ -4,12 +4,15 @@ const reducers = (state,action) =>{
             return {
                 ...state,
                 User: action.payload
-            }        
-        
-        default:
+            } 
+        case "SET_ERROR":
             return{
-                state
+                ...state,
+                errorMessage: action.payload
             }
+        default:
+            return state
+            
     }
 }
 

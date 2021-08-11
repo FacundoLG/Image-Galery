@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { setUser } from "../redux/actions/index";
+import { setUser, setError } from "../redux/actions/index";
 import styled from "styled-components";
 
 const LoginBackGround = styled.div`
@@ -77,7 +77,8 @@ const Login = (props) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        props.setUser(data);
+        props.setUser(data.result);
+        props.setError(data.errorMessage);
       });
   };
 
@@ -128,5 +129,6 @@ const MapStateToProps = (state) => {
 };
 const MapDispathcToProps = {
   setUser,
+  setError,
 };
 export default connect(MapStateToProps, MapDispathcToProps)(Login);
