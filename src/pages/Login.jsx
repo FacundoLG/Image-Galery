@@ -31,8 +31,14 @@ const InputContainer = styled.div`
   > .error {
     color: red;
     text-align: center;
-    margin: 2px;
+    margin: 0;
     font-size: 14px;
+  }
+  > .greyredirect {
+    text-align: center;
+    font-size: 14px;
+    margin: 4px 0 0 0;
+    font-weight: 300;
   }
 `;
 const LoginInput = styled.input`
@@ -77,8 +83,9 @@ const Login = (props) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        props.setUser(data.result);
-        props.setError(data.errorMessage);
+        console.log(data);
+        props.setUser({ ...data.result, loggedIn: true });
+        props.setError(data.message);
       });
   };
 
@@ -106,6 +113,9 @@ const Login = (props) => {
             }}
           />
           <InputButton onClick={Login}>Sing Up</InputButton>
+          <p className="greyredirect">
+            Do you don't have an account? <a href="/register">Sing Up</a>{" "}
+          </p>
           <p className="error">{errorMessage}</p>
         </InputContainer>
         <p>

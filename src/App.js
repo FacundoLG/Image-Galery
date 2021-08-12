@@ -2,28 +2,37 @@ import './App.css';
 import Login from './pages/Login'
 import SingUp from './pages/SingUp'
 import Home from './pages/Home'
-import {BrowserRouter as Router, Switch, Redirect} from 'react-router-dom'
-function App() {
+import {BrowserRouter as Router, Switch, Redirect, Route} from 'react-router-dom'
+import { connect } from 'react-redux';
+function App({loggedIn}) {
   return (
     <div className="App">
       <Router>
         <Switch>
-          <Router path="/home">
-            <Home/>
-          </Router>
-          <Router path="/login">
+          <Route path="/login">
             <Login />
-          </Router>
-          <Router path="/register">
+            { loggedIn ? <Redirect to="/home"/> : ""}
+          </Route>
+          <Route path="/register">
             <SingUp/>
-          </Router>
-          <Router path="/">
+          </Route>
+          { loggedIn ? 
+          <Route path="/home">
+            <Home/>
+          </Route>: 
+          <Redirect to="/login"/>
+        }
+          <Route path="/">
               <Redirect to="/login"/>   
-          </Router>
+          </Route>
         </Switch>
       </Router>
     </div>
   );
 }
-
-export default App;
+const MapStateToProps = state => {
+  return {
+    loggedIn: state.User.loggedIn
+  }
+}
+export default connect(MapStateToProps,null)(App);

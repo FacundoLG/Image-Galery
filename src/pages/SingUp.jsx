@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { setUser, setError } from "../redux/actions/index";
+import { connect } from "react-redux";
 import styled from "styled-components";
 const SingUpBackGround = styled.div`
   display: flex;
@@ -25,6 +27,18 @@ const InputContainer = styled.div`
   flex-direction: column;
   width: 90%;
   margin: 0 0 50px 0;
+  > .error {
+    color: red;
+    text-align: center;
+    margin: 0;
+    font-size: 14px;
+  }
+  > .greyredirect {
+    text-align: center;
+    font-size: 14px;
+    margin: 4px 0 0 0;
+    font-weight: 300;
+  }
 `;
 const SingUpInput = styled.input`
   height: 30px;
@@ -49,7 +63,8 @@ const InputButton = styled.button`
     cursor: pointer;
   }
 `;
-const SingUp = () => {
+const SingUp = (props) => {
+  const { errorMessage } = props;
   const [username, setUserName] = useState("");
   const [userEmail, setuserEmail] = useState("");
   const [userPassword, setuserPassword] = useState("");
@@ -118,6 +133,10 @@ const SingUp = () => {
             required
           />
           <InputButton onClick={Register}>Sing Up</InputButton>
+          <p className="greyredirect">
+            Do you have an account? <a href="/login">Log In</a>{" "}
+          </p>
+          <p className="error">{errorMessage}</p>
         </InputContainer>
         <p>
           By{" "}
@@ -133,4 +152,13 @@ const SingUp = () => {
     </SingUpBackGround>
   );
 };
-export default SingUp;
+const MapStateToProps = (state) => {
+  return {
+    errorMessage: state.errorMessage,
+  };
+};
+const MapDispathcToProps = {
+  setUser,
+  setError,
+};
+export default connect(MapStateToProps, MapDispathcToProps)(SingUp);
