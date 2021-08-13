@@ -23,7 +23,15 @@ const HomeTop = styled.div`
   padding: 10px;
 `;
 const CardContainer = styled.div`
+  display: grid;
+  justify-items: center;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 0.6fr));
+  grid-template-rows: repeat(auto-fit, 100px);
   grid-area: cardContainer;
+  grid-auto-flow: row;
+  overflow: auto;
+  justify-items: stretch;
+  justify-content: center;
 `;
 
 const Home = (props) => {
@@ -33,7 +41,42 @@ const Home = (props) => {
     <HomeContainer>
       <HomeTop>Hi how are you {UserData.name} </HomeTop>
       <CardContainer>
-        <ContactCard />
+        <ContactCard
+          name="Facundo Gimenez"
+          email="facundo123123@gmail.com"
+          phoneNum="+54 34357892"
+          img=""
+        />
+        <ContactCard
+          name="Facundo Gimenez"
+          email="facundo123123@gmail.com"
+          phoneNum="+54 34357892"
+          img=""
+        />
+        <ContactCard
+          name="Facundo Gimenez"
+          email="facundo123123@gmail.com"
+          phoneNum="+54 34357892"
+          img=""
+        />
+        <ContactCard
+          name="Facundo Gimenez"
+          email="facundo123123@gmail.com"
+          phoneNum="+54 34357892"
+          img=""
+        />
+        <ContactCard
+          name="Facundo Gimenez"
+          email="facundo123123@gmail.com"
+          phoneNum="+54 34357892"
+          img=""
+        />
+        <ContactCard
+          name="Facundo Gimenez"
+          email="facundo123123@gmail.com"
+          phoneNum="+54 34357892"
+          img=""
+        />
       </CardContainer>
     </HomeContainer>
   );
